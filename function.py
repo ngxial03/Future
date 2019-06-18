@@ -88,7 +88,7 @@ def getKeyPoint(tx5Data, breakIndex, direction, returnScale):
 def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitude, loseAmplitude):
     result = {}
     bonus = 0
-    touchTime = ""
+    touchTime = '00:00:00'
 
     for i in range(breakIndex+1, len(tx5Data)):
         time = tx5Data[i][TX5_DATA_TIME]
@@ -129,7 +129,9 @@ def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitu
 def getMaxBonus(tx5Data, breakIndex, direction, keyPoint, terminalTime):
     result = {}
     maxBonus = 0
-    touchTime = ""
+    touchTime = '00:00:00'
+    print(keyPoint)
+    print(direction)
     for i in range(breakIndex+1, len(tx5Data)):
         time = tx5Data[i][TX5_DATA_TIME]
         maxValue = int(tx5Data[i][TX5_DATA_MAX_VALUE])
@@ -138,19 +140,23 @@ def getMaxBonus(tx5Data, breakIndex, direction, keyPoint, terminalTime):
         if time > terminalTime:
             break
 
-        if direction == 0 & maxValue >= keyPoint:
+        print(keyPoint)
+        print(direction)
+        print(maxValue)
+        if (direction == 0) & (maxValue >= keyPoint):
             diff = maxValue - keyPoint
+            print(diff)
             if diff > maxBonus:
                 maxBonus = diff
                 touchTime = time
 
-        if direction == 1 & minValue <= keyPoint:
+        if (direction == 1) & (minValue <= keyPoint):
             diff = keyPoint - minValue
             if diff > maxBonus:
                 maxBonus = diff
                 touchTime = time
 
-    result["maxBonus"] = maxBonus
-    result["time"] = touchTime
+    result['maxBonus'] = maxBonus
+    result['time'] = touchTime
 
     return result
