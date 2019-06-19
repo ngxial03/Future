@@ -96,7 +96,8 @@ def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitu
         minValue = int(tx5Data[i][TX5_DATA_MIN_VALUE])
         lastValue = int(tx5Data[i][TX5_DATA_LAST_VALUE])
 
-        if time > terminalTime:
+        if time >= terminalTime:
+            touchTime = time
             if direction == 0:
                 bonus = lastValue - keyPoint
             if direction == 1:
@@ -130,8 +131,6 @@ def getMaxBonus(tx5Data, breakIndex, direction, keyPoint, terminalTime):
     result = {}
     maxBonus = 0
     touchTime = '00:00:00'
-    print(keyPoint)
-    print(direction)
     for i in range(breakIndex+1, len(tx5Data)):
         time = tx5Data[i][TX5_DATA_TIME]
         maxValue = int(tx5Data[i][TX5_DATA_MAX_VALUE])
@@ -140,12 +139,8 @@ def getMaxBonus(tx5Data, breakIndex, direction, keyPoint, terminalTime):
         if time > terminalTime:
             break
 
-        print(keyPoint)
-        print(direction)
-        print(maxValue)
         if (direction == 0) & (maxValue >= keyPoint):
             diff = maxValue - keyPoint
-            print(diff)
             if diff > maxBonus:
                 maxBonus = diff
                 touchTime = time

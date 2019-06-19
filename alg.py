@@ -1,6 +1,6 @@
 import function
 
-TX5_DIR = "/Users/edward/SourceCode/Future/tx5_test"
+TX5_DIR = "/Users/edward_cc_wu/SourceCode/Future/tx5_test"
 BASE_RANGE = 3
 PRE_BREAK_INDEX = 2
 PRE_BREAK_AMPLITUDE = 12
@@ -11,16 +11,21 @@ TERMINAL_TIME = "11:30:00"
 WIN_AMPLITUDE = 25
 LOSE_AMPLITUDE = 26
 
+g_total = 0
+
 
 def go():
-    #writeTitle()
+    writeTitle()
     dirs = function.listTx5Dir(TX5_DIR)
+    dirs = sorted(dirs)
     for d in range(len(dirs)):
         if('txt' in dirs[d]):
             trace(dirs[d])
+    writeTotal()
 
 
 def trace(path):
+    print(path)
     tx5Data = function.getTx5Data(path)
 
     baseMaxValue = function.getBaseMaxValue(
@@ -29,7 +34,6 @@ def trace(path):
     baseMinValue = function.getBaseMinValue(
         tx5Data, BASE_RANGE, PRE_BREAK_INDEX, PRE_BREAK_AMPLITUDE)
 
-    # print(path)
     out = {}
     out['baseMaxValue'] = baseMaxValue
     out['baseMinValue'] = baseMinValue
@@ -43,8 +47,10 @@ def trace(path):
     out['date'] = tx5Data[0][function.TX5_DATA_DATE]
     if breakIndex >= 0 & direction >= 0:
         out['direction'] = ("up", "down")[direction == 1]
-        out['breakMaxValue'] = int(tx5Data[breakIndex][function.TX5_DATA_MAX_VALUE])
-        out['breakMinValue'] = int(tx5Data[breakIndex][function.TX5_DATA_MIN_VALUE])
+        out['breakMaxValue'] = int(
+            tx5Data[breakIndex][function.TX5_DATA_MAX_VALUE])
+        out['breakMinValue'] = int(
+            tx5Data[breakIndex][function.TX5_DATA_MIN_VALUE])
         out['breakTime'] = tx5Data[breakIndex][function.TX5_DATA_TIME]
 
         keyPoint = function.getKeyPoint(
@@ -69,16 +75,34 @@ def trace(path):
         out['result'] = 0
         out['resultTime'] = '00:00:00'
 
-    #print(out)
+    global g_total
+    g_total = g_total + out['result']
     writeToFile(out)
+
 
 def writeToFile(out):
     f = open('out.txt', 'a')
-    #print(out[(out.keys()[10])])
+    # print(out[(out.keys()[10])])
     baseDiff = out['baseMaxValue'] - out['baseMinValue']
     breakDiff = out['breakMaxValue'] - out['breakMinValue']
-    f.write("%s\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%s\t%d\t%s\t%d\t%s\t\n" % (out['date'], out['baseMaxValue'],
-         out['baseMinValue'], baseDiff, out['breakMaxValue'], out['breakMinValue'], out['breakTime'], breakDiff,
-         out['keyPoint'], out['direction'], out['maxBonus'], out['maxBonusTime'], out['result'], out['resultTime']))
+    f.write("%10s%16d%16d%12d%17d%17d%13s%13d%12d%13s%12d%16s%10d%14s\n" % (out['date'], out['baseMaxValue'],
+                                                                            out['baseMinValue'], baseDiff, out['breakMaxValue'], out[
+                                                                                'breakMinValue'], out['breakTime'], breakDiff,
+                                                                            out['keyPoint'], out['direction'], out['maxBonus'], out['maxBonusTime'], out['result'], out['resultTime']))
 
+    f.close()
+
+
+def writeTitle():
+    f = open('out.txt', 'a')
+    f.write("%10s%16s%16s%12s%17s%17s%13s%13s%12s%13s%12s%16s%10s%14s\n\n" % ('date', 'baseMaxValue', 'baseMinValue', 'baseDiff',
+                                                                              'breakMaxValue', 'breakMinValue', 'breakTime', 'breakDiff', 'keyPoint',
+                                                                              'direction', 'maxBonus', 'maxBonusTime', 'result', 'resultTime'))
+    f.close()
+
+
+def writeTotal():
+    f = open('out.txt', 'a')
+    global g_total
+    f.write("\n\n%s\t%d\n\n" % ('total:', g_total))
     f.close()
