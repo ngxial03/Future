@@ -27,7 +27,7 @@ def getBaseMaxValue(tx5Data, baseRange, preBreakIndex, perBreakAmplitude):
         maxV = int(tx5Data[i][TX5_DATA_MAX_VALUE])
         lastV = int(tx5Data[i][TX5_DATA_LAST_VALUE])
         if maxV > maxValue:
-            if i >= preBreakIndex & (lastV - maxValue) >= perBreakAmplitude:
+            if (i >= preBreakIndex) & ((lastV - maxValue) >= perBreakAmplitude):
                 break
             else:
                 maxValue = maxV
@@ -40,7 +40,7 @@ def getBaseMinValue(tx5Data, baseRange, preBreakIndex, perBreakAmplitude):
         minV = int(tx5Data[i][TX5_DATA_MIN_VALUE])
         lastV = int(tx5Data[i][TX5_DATA_LAST_VALUE])
         if minV < minValue:
-            if i >= preBreakIndex & (minValue - lastV) >= perBreakAmplitude:
+            if (i >= preBreakIndex) & ((minValue - lastV) >= perBreakAmplitude):
                 break
             else:
                 minValue = minV
@@ -96,14 +96,6 @@ def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitu
         minValue = int(tx5Data[i][TX5_DATA_MIN_VALUE])
         lastValue = int(tx5Data[i][TX5_DATA_LAST_VALUE])
 
-        if time >= terminalTime:
-            touchTime = time
-            if direction == 0:
-                bonus = lastValue - keyPoint
-            if direction == 1:
-                bonus = keyPoint - lastValue
-            break
-
         if direction == 0:
             lose = keyPoint - minValue
             win = maxValue - keyPoint
@@ -120,6 +112,14 @@ def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitu
         if lose >= loseAmplitude:
             bonus = -1 * loseAmplitude
             touchTime = time
+            break
+
+        if time >= terminalTime:
+            touchTime = time
+            if direction == 0:
+                bonus = lastValue - keyPoint
+            if direction == 1:
+                bonus = keyPoint - lastValue
             break
 
     result["bonus"] = bonus
@@ -153,5 +153,35 @@ def getMaxBonus(tx5Data, breakIndex, direction, keyPoint, terminalTime):
 
     result['maxBonus'] = maxBonus
     result['time'] = touchTime
+
+    return result
+
+
+def getMaxLoss(tx5Data, breakIndex, direction, keyPoint, terminalTime):
+    result = {}
+    maxLoss = 0
+    touchTime = '00:00:00'
+    for i in range(breakIndex+1, len(tx5Data)):
+        time = tx5Data[i][TX5_DATA_TIME]
+        maxValue = int(tx5Data[i][TX5_DATA_MAX_VALUE])
+        minValue = int(tx5Data[i][TX5_DATA_MIN_VALUE])
+
+        if time > terminalTime:
+            break
+
+        if (direction == 0) & (minValue <= keyPoint):
+            diff = minValue - keyPoint
+            if diff < maxLoss:
+                maxLoss = diff
+                touchTime = time
+
+        if (direction == 1) & (maxValue >= keyPoint):
+            diff = keyPoint - maxValue
+            if diff < maxLoss:
+                maxLoss = diff
+                touchTime = time
+
+    result['maxLoss'] = maxLoss
+    result['time'] = touchTime 
 
     return result
