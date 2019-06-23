@@ -56,18 +56,21 @@ def trace(path):
         keyPoint = function.getKeyPoint(
             tx5Data, breakIndex, direction, RETURN_SCALE)
         out['keyPoint'] = keyPoint
-        maxBonus = function.getMaxBonus(
-            tx5Data, breakIndex, direction, keyPoint, TERMINAL_TIME)
-        out['maxBonus'] = maxBonus['maxBonus']
-        out['maxBonusTime'] = maxBonus['time']
-        maxLoss = function.getMaxLoss(
-            tx5Data, breakIndex, direction, keyPoint, TERMINAL_TIME)
-        out['maxLoss'] = maxLoss['maxLoss']
-        out['maxLossTime'] = maxLoss['time']
+
         result = function.getResult(
             tx5Data, breakIndex, direction, keyPoint, TERMINAL_TIME, WIN_AMPLITUDE, LOSE_AMPLITUDE)
         out['result'] = result['bonus']
         out['resultTime'] = result['touchTime']
+
+        maxBonus = function.getMaxBonus(
+            tx5Data, breakIndex, direction, keyPoint, out['resultTime'])
+        out['maxBonus'] = maxBonus['maxBonus']
+        out['maxBonusTime'] = maxBonus['time']
+
+        maxLoss = function.getMaxLoss(
+            tx5Data, breakIndex, direction, keyPoint, out['resultTime'])
+        out['maxLoss'] = maxLoss['maxLoss']
+        out['maxLossTime'] = maxLoss['time']
     else:
         out['direction'] = "-"
         out['breakMaxValue'] = 0
