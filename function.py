@@ -2,6 +2,7 @@ from os import listdir
 
 TX5_DATA_DATE = 0
 TX5_DATA_TIME = 1
+TX5_DATA_OPEN_VALUE = 2
 TX5_DATA_MAX_VALUE = 3
 TX5_DATA_MIN_VALUE = 4
 TX5_DATA_LAST_VALUE = 5
@@ -182,6 +183,6 @@ def getMaxLoss(tx5Data, breakIndex, direction, keyPoint, terminalTime):
                 touchTime = time
 
     result['maxLoss'] = maxLoss
-    result['time'] = touchTime 
+    result['time'] = touchTime
 
     return result
