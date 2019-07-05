@@ -1,7 +1,9 @@
 import function
+import function2
 
 #TX5_DIR = "C:/cygwin64/home/Edward_Wu/SourceCodes/Future/tx5_test"
 TX5_DIR = "/Users/edward_cc_wu/SourceCode/Future/tx5_test"
+TX_DAILY_DIR = "/Users/edward_cc_wu/SourceCode/Future/daily.txt"
 BASE_RANGE = 3
 PRE_BREAK_INDEX = 2
 PRE_BREAK_AMPLITUDE = 5
@@ -27,6 +29,7 @@ def go():
 
 def trace(path):
     print(path)
+    dailyData = function2.getDailyData(TX_DAILY_DIR)
     tx5Data = function.getTx5Data(path)
 
     baseMaxValue = function.getBaseMaxValue(
@@ -36,6 +39,9 @@ def trace(path):
         tx5Data, BASE_RANGE, PRE_BREAK_INDEX, PRE_BREAK_AMPLITUDE)
 
     out = {}
+    diff = function2.getDiff(dailyData, tx5Data[0][function.TX5_DATA_DATE])
+    out['diff'] = diff
+
     out['baseMaxValue'] = baseMaxValue
     out['baseMinValue'] = baseMinValue
 
@@ -95,7 +101,7 @@ def writeToFile(out):
     # print(out[(out.keys()[10])])
     baseDiff = out['baseMaxValue'] - out['baseMinValue']
     breakDiff = out['breakMaxValue'] - out['breakMinValue']
-    f.write("%10s%16d%16d%12d%17d%17d%13s%13d%12d%13s%12d%16s%12d%16s%10d%14s\n" % (out['date'], out['baseMaxValue'],
+    f.write("%10s%16d%16d%16d%12d%17d%17d%13s%13d%12d%13s%12d%16s%12d%16s%10d%14s\n" % (out['date'], out['diff'], out['baseMaxValue'],
                                                                                     out['baseMinValue'], baseDiff, out['breakMaxValue'], out[
         'breakMinValue'], out['breakTime'], breakDiff,
         out['keyPoint'], out['direction'], out['maxBonus'], out['maxBonusTime'],
@@ -107,7 +113,7 @@ def writeToFile(out):
 
 def writeTitle():
     f = open('out.txt', 'a')
-    f.write("%10s%16s%16s%12s%17s%17s%13s%13s%12s%13s%12s%16s%12s%16s%10s%14s\n\n" % ('date', 'baseMaxValue', 'baseMinValue', 'baseDiff',
+    f.write("%10s%16s%16s%16s%12s%17s%17s%13s%13s%12s%13s%12s%16s%12s%16s%10s%14s\n\n" % ('date', 'diff', 'baseMaxValue', 'baseMinValue', 'baseDiff',
                                                                                       'breakMaxValue', 'breakMinValue', 'breakTime', 'breakDiff', 'keyPoint',
                                                                                       'direction', 'maxBonus', 'maxBonusTime', 'maxLoss', 'maxLossTime', 'result', 'resultTime'))
     f.close()
