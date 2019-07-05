@@ -70,7 +70,7 @@ def trace(path):
         out['resultTime'] = result['touchTime']
 
         maxBonus = function.getMaxBonus(
-            tx5Data, breakIndex, direction, keyPoint, out['resultTime'])
+            tx5Data, breakIndex, direction, keyPoint, TERMINAL_TIME)
         out['maxBonus'] = maxBonus['maxBonus']
         out['maxBonusTime'] = maxBonus['time']
 
