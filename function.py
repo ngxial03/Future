@@ -85,6 +85,21 @@ def getKeyPoint(tx5Data, breakIndex, direction, returnScale):
 
     return keyPoint
 
+def getEnterTime(tx5Data, breakIndex, direction, keyPoint):
+    time = -1
+    if breakIndex > 0:
+        for i in range(breakIndex+1, len(tx5Data)):
+            if direction == 0:
+                minValue = int(tx5Data[i][TX5_DATA_MIN_VALUE])
+                if minValue <= keyPoint:
+                    time = tx5Data[i][TX5_DATA_TIME]
+                    break
+            if direction == 1:
+                maxValue = int(tx5Data[i][TX5_DATA_MAX_VALUE])
+                if maxValue >= keyPoint:
+                    time = tx5Data[i][TX5_DATA_TIME]
+                    break
+    return time
 
 def getResult(tx5Data, breakIndex, direction, keyPoint, terminalTime, winAmplitude, loseAmplitude):
     result = {}
