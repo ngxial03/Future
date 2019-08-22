@@ -1,9 +1,9 @@
-from common import function, function2
+from common import config, function, function2
 
 #TX5_DIR = "C:/cygwin64/home/Edward_Wu/SourceCodes/Future/tx5_test"
-TX5_DIR = "/Users/edward_cc_wu/SourceCode/Future/tx5_test"
+# TX5_DIR = "/Users/edward_cc_wu/SourceCode/Future/tx5_test"
 #TX_DAILY_DIR = "C:/cygwin64/home/Edward_Wu/SourceCodes/out/Future/daily.txt"
-TX_DAILY_DIR = "/Users/edward_cc_wu/SourceCode/Future/out/daily.txt"
+# TX_DAILY_DIR = "/Users/edward_cc_wu/SourceCode/Future/out/daily.txt"
 
 DIFF_AMPLITUDE = 100
 TERMINAL_TIME = "11:30:00"
@@ -11,9 +11,9 @@ TERMINAL_TIME = "11:30:00"
 
 def go():
     writeTitle()
-    dirs = function.listTx5Dir(TX5_DIR)
+    dirs = function.listTx5Dir(config.TX5_DIR)
     dirs = sorted(dirs)
-    dailyData = function2.getDailyData(TX_DAILY_DIR)
+    dailyData = function2.getDailyData(config.TX_DAILY_DIR)
     for d in range(len(dirs)):
         if('txt' in dirs[d]):
             trace(dirs[d], dailyData)
