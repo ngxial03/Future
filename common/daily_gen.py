@@ -17,13 +17,8 @@ def trace(path):
     print(path)
     tx5Data = function.getTx5Data(path)
 
-    out = {}
-    out['date'] = tx5Data[0][function.TX5_DATA_DATE]
-    out['high'] = getHighValue(tx5Data)
-    out['low'] = getLowValue(tx5Data)
-    out['open'] = getOpenValue(tx5Data)
-    out['close'] = getCloseValue(tx5Data)
-    out['volume'] = getVolume(tx5Data)
+    out = {'date': tx5Data[0][function.TX5_DATA_DATE], 'high': getHighValue(tx5Data), 'low': getLowValue(tx5Data),
+           'open': getOpenValue(tx5Data), 'close': getCloseValue(tx5Data), 'volume': getVolume(tx5Data)}
 
     writeToFile(out)
 

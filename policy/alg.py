@@ -1,9 +1,5 @@
 from common import config, function, function2
 
-#TX5_DIR = "C:/cygwin64/home/Edward_Wu/SourceCodes/Future/tx5_test"
-# TX5_DIR = "/Users/edward_cc_wu/SourceCode/Future/tx5_test"
-#TX_DAILY_DIR = "C:/cygwin64/home/Edward_Wu/SourceCodes/Future/out/daily.txt"
-# TX_DAILY_DIR = "/Users/edward_cc_wu/SourceCode/Future/out/daily.txt"
 BASE_RANGE = 3
 PRE_BREAK_INDEX = 2
 PRE_BREAK_AMPLITUDE = 5
