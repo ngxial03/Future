@@ -1,5 +1,5 @@
 import os
-import function
+from common import function
 from common import config
 
 
