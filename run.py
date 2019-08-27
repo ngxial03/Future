@@ -1,8 +1,5 @@
-from common import output, function, tx1_helper
-from common import daily_gen
-from policy import alg, alg2
-from os import listdir
-import os
+from common import output
+from policy import happy
 
 output.remove()
 
@@ -16,12 +13,14 @@ output.remove()
 #     return dirList
 
 
-# tx1_dic = tx1_helper.list_tx1_dir('tx1_data')
-# for key in tx1_dic:
-#     print (tx1_helper.get_tx1_data(tx1_dic[key][0]))
+happy.go()
+# tx1_dir = tx1_helper.list_tx1_dir('tx1_data')
+# for key in tx1_dir:
+#     print (tx1_dir[key])
+    # print (tx1_helper.get_tx1_data(tx1_dir[key][0]))
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
 
-daily_gen.go()
-alg.go()
-alg2.go()
+# daily_gen.go()
+# alg.go()
+# alg2.go()
