@@ -1,2 +1,0 @@
-      date            diff    baseMaxValue    baseMinValue    baseDiff    breakMaxValue    breakMinValue    breakTime    breakDiff    keyPoint    direction       enterTime    maxBonus    maxBonusTime     maxLoss     maxLossTime    result    resultTime
-

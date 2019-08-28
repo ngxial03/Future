@@ -1,4 +1,6 @@
 from os import listdir
+from common import config
+import csv
 
 DATA_DATE = 0
 DATA_TIME = 1
@@ -33,3 +35,13 @@ def get_data(f):
     return data1
 
 
+def csv_write_header(f_name, header):
+    with open(config.OUT + '/' + f_name + '.csv', 'a') as f:
+        w = csv.DictWriter(f, header)
+        w.writeheader()
+
+
+def csv_write_row(f_name, header, out):
+    with open(config.OUT + '/' + f_name + '.csv', 'a') as f:
+        w = csv.DictWriter(f, header)
+        w.writerow(out)

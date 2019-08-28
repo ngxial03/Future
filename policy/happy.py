@@ -1,5 +1,6 @@
 from common import config, data_handler
 from helper import raw_data_helper
+import csv
 
 # minutes
 BASE_RANGE = 15  # 09:00:00
@@ -18,7 +19,7 @@ RETURN_SCALE = 3
 
 
 def go():
-    writeTitle()
+    # writeTitle()
 
     tx1_dir = raw_data_helper.list_raw_dir(config.TX1_DIR)
     tx5_dir = raw_data_helper.list_raw_dir(config.TX5_DIR)
@@ -27,6 +28,7 @@ def go():
     for key in tx1_dir:
         print (key)
         # print (tx1_helper.get_tx1_data(tx1_dir[key][0]))
+        raw_data_helper.csv_write_header('happy', get_out_key())
         for p in range(len(tx1_dir[key])):
             trace(tx1_dir[key][p], tx5_dir[key][p])
             # break
@@ -42,10 +44,10 @@ def trace(tx1_file, tx5_file):
     tx5_data = raw_data_helper.get_data(tx5_file)
 
     base_point = get_base_point(tx5_data, BASE_RANGE // 5, PRE_BREAK_INDEX // 5, PRE_BREAK_AMPLITUDE)
-    # print(base_point)
+    print(base_point)
 
     break_point = get_break_point(tx5_data, PRE_BREAK_INDEX // 5, base_point)
-    # print(break_point)
+    print(break_point)
 
     key_point = get_key_point(break_point, RETURN_SCALE)
     # print(key_point)
@@ -53,8 +55,24 @@ def trace(tx1_file, tx5_file):
     enter_point = get_enter_point(tx1_data, break_point, key_point)
     # print(enter_point)
 
-    result_point = get_result_point(tx1_data, enter_point, key_point, TERMINAL_TIME, WIN_AMPLITUDE, LOSE_AMPLITUDE)
-    print(result_point)
+    bounds_point = get_bounds_point(tx1_data, enter_point, key_point, TERMINAL_TIME, WIN_AMPLITUDE, LOSE_AMPLITUDE)
+    print(bounds_point)
+
+    out = {'date': tx1_data[0][data_handler.DATA_DATE],
+           'base_max': base_point['max'],
+           'base_min': base_point['min'],
+           'break_max': break_point['max'],
+           'break_min': break_point['min'],
+           'direction': 'up' if break_point['direction'] == 0 else 'down',
+           'break_time': break_point['time'],
+           'key_point': key_point,
+           'enter_time': enter_point['time'],
+           'bounds': bounds_point['bonus'],
+           'bounds_time': bounds_point['time']}
+
+    print('\n')
+
+    raw_data_helper.csv_write_row('happy', get_out_key(), out)
 
     # baseMinValue = function.getBaseMinValue(
     #     tx5Data, BASE_RANGE, PRE_BREAK_INDEX, PRE_BREAK_AMPLITUDE)
@@ -204,9 +222,9 @@ def get_enter_point(data, break_point, key_point):
     return {'max': max_value, 'min': min_value, 'time': time, 'index': index + 1, 'direction': break_point['direction']}
 
 
-def get_result_point(data, enter_point, key_point, terminal_time, win_amplitude, lose_amplitude):
+def get_bounds_point(data, enter_point, key_point, terminal_time, win_amplitude, lose_amplitude):
     bonus = 0
-    touch_time = '00:00:00'
+    bounds_time = '00:00:00'
 
     for i in range(enter_point['index'], len(data)):
         time = data[i][raw_data_helper.DATA_TIME]
@@ -226,52 +244,56 @@ def get_result_point(data, enter_point, key_point, terminal_time, win_amplitude,
 
         if win >= win_amplitude:
             bonus = win_amplitude
-            touch_time = time
+            bounds_time = time
             break
 
         if lose >= lose_amplitude:
             bonus = -1 * lose_amplitude
-            touch_time = time
+            bounds_time = time
             break
 
         if i >= terminal_time - 1:
-            touch_time = time
+            bounds_time = time
             if enter_point['direction'] == 0:
                 bonus = last_value - key_point
             if enter_point['direction'] == 1:
                 bonus = key_point - last_value
             break
 
-    return {'bonus': bonus, 'time': touch_time}
+    return {'bonus': bonus, 'time': bounds_time}
 
 
-def writeToFile(out):
-    f = open('out/out.txt', 'a')
-    # print(out[(out.keys()[10])])
-    baseDiff = out['baseMaxValue'] - out['baseMinValue']
-    breakDiff = out['breakMaxValue'] - out['breakMinValue']
-    f.write("%10s%16d%16d%16d%12d%17d%17d%13s%13d%12d%13s%16s%12d%16s%12d%16s%10d%14s\n" % (
-        out['date'], out['diff'], out['baseMaxValue'],
-        out['baseMinValue'], baseDiff, out['breakMaxValue'], out[
-            'breakMinValue'], out['breakTime'], breakDiff,
-        out['keyPoint'], out['direction'], out['enterTime'], out['maxBonus'], out['maxBonusTime'],
-        out['maxLoss'], out['maxLossTime'],
-        out['result'], out['resultTime']))
+def get_out_key():
+    return ['date', 'base_max', 'base_min', 'break_max', 'break_min', 'direction', 'break_time',
+            'key_point', 'enter_time', 'bounds', 'bounds_time']
 
-    f.close()
-
-
-def writeTitle():
-    f = open('out/out.txt', 'a')
-    f.write("%10s%16s%16s%16s%12s%17s%17s%13s%13s%12s%13s%16s%12s%16s%12s%16s%10s%14s\n\n" % (
-        'date', 'diff', 'baseMaxValue', 'baseMinValue', 'baseDiff',
-        'breakMaxValue', 'breakMinValue', 'breakTime', 'breakDiff', 'keyPoint',
-        'direction', 'enterTime', 'maxBonus', 'maxBonusTime', 'maxLoss', 'maxLossTime', 'result', 'resultTime'))
-    f.close()
-
-
-def writeTotal():
-    f = open('out/out.txt', 'a')
-    global g_total
-    f.write("\n\n%s\t%d\n\n" % ('total:', g_total))
-    f.close()
+# def writeToFile(out):
+#     f = open('out/out.txt', 'a')
+#     # print(out[(out.keys()[10])])
+#     baseDiff = out['baseMaxValue'] - out['baseMinValue']
+#     breakDiff = out['breakMaxValue'] - out['breakMinValue']
+#     f.write("%10s%16d%16d%16d%12d%17d%17d%13s%13d%12d%13s%16s%12d%16s%12d%16s%10d%14s\n" % (
+#         out['date'], out['diff'], out['baseMaxValue'],
+#         out['baseMinValue'], baseDiff, out['breakMaxValue'], out[
+#             'breakMinValue'], out['breakTime'], breakDiff,
+#         out['keyPoint'], out['direction'], out['enterTime'], out['maxBonus'], out['maxBonusTime'],
+#         out['maxLoss'], out['maxLossTime'],
+#         out['result'], out['resultTime']))
+#
+#     f.close()
+#
+#
+# def writeTitle():
+#     f = open('out/out.txt', 'a')
+#     f.write("%10s%16s%16s%16s%12s%17s%17s%13s%13s%12s%13s%16s%12s%16s%12s%16s%10s%14s\n\n" % (
+#         'date', 'diff', 'baseMaxValue', 'baseMinValue', 'baseDiff',
+#         'breakMaxValue', 'breakMinValue', 'breakTime', 'breakDiff', 'keyPoint',
+#         'direction', 'enterTime', 'maxBonus', 'maxBonusTime', 'maxLoss', 'maxLossTime', 'result', 'resultTime'))
+#     f.close()
+#
+#
+# def writeTotal():
+#     f = open('out/out.txt', 'a')
+#     global g_total
+#     f.write("\n\n%s\t%d\n\n" % ('total:', g_total))
+#     f.close()
