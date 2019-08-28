@@ -10,7 +10,7 @@ TERMINAL_TIME = 165  # 11:30:00
 
 # points
 PRE_BREAK_AMPLITUDE = 5
-BREAK_AMPLITUDE = 12
+PRE_BONUS_AMPLITUDE = 18
 WIN_AMPLITUDE = 26
 LOSE_AMPLITUDE = 26
 
@@ -57,7 +57,8 @@ def trace(month, tx1_file, tx5_file):
     enter_point = get_enter_point(tx1_data, break_point, key_point)
     # print(enter_point)
 
-    bonus_point = get_bonus_point(tx1_data, enter_point, key_point, TERMINAL_TIME, WIN_AMPLITUDE, LOSE_AMPLITUDE)
+    bonus_point = get_bonus_point(tx1_data, enter_point, key_point, TERMINAL_TIME, PRE_BONUS_AMPLITUDE, WIN_AMPLITUDE,
+                                  LOSE_AMPLITUDE)
     print(bonus_point)
 
     out = {'date': tx1_data[0][data_handler.DATA_DATE],
@@ -167,7 +168,7 @@ def get_enter_point(data, break_point, key_point):
     return {'max': max_value, 'min': min_value, 'time': time, 'index': index, 'direction': break_point['direction']}
 
 
-def get_bonus_point(data, enter_point, key_point, terminal_time, win_amplitude, lose_amplitude):
+def get_bonus_point(data, enter_point, key_point, terminal_time, pre_bonus_amplitude, win_amplitude, lose_amplitude):
     bonus = 0
     bonus_time = ''
     max_bonus = 0
@@ -201,15 +202,20 @@ def get_bonus_point(data, enter_point, key_point, terminal_time, win_amplitude, 
                 max_lose = lose
                 max_lose_time = time
 
+            if (lose > 0) & (max_bonus >= pre_bonus_amplitude):
+                bonus = -1 * lose
+                bonus_time = time
+                break
+
             if (win >= win_amplitude) & (bonus == 0):
                 bonus = win_amplitude
                 bonus_time = time
-                # break
+                break
 
             if (lose >= lose_amplitude) & (bonus == 0):
                 bonus = -1 * lose_amplitude
                 bonus_time = time
-                # break
+                break
 
             if i >= terminal_time - 1:
                 if bonus == 0:
