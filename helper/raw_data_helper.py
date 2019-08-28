@@ -36,6 +36,7 @@ def get_data(f):
 
 
 def csv_write_header(f_name, header):
+    print(config.OUT + '/' + f_name + '.csv')
     with open(config.OUT + '/' + f_name + '.csv', 'a') as f:
         w = csv.DictWriter(f, header)
         w.writeheader()
