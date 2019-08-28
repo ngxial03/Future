@@ -54,7 +54,7 @@ def trace(month, tx1_file, tx5_file):
     key_point = get_key_point(break_point, RETURN_SCALE)
     # print(key_point)
 
-    enter_point = get_enter_point(tx1_data, break_point, key_point)
+    enter_point = get_enter_point(tx1_data, break_point, key_point, BREAK_RANGE)
     # print(enter_point)
 
     bonus_point = get_bonus_point(tx1_data, enter_point, key_point, TERMINAL_TIME, PRE_BONUS_AMPLITUDE, WIN_AMPLITUDE,
@@ -66,7 +66,7 @@ def trace(month, tx1_file, tx5_file):
            'base_min': base_point['min'],
            'break_max': break_point['max'],
            'break_min': break_point['min'],
-           'direction': 'up' if break_point['direction'] == 0 else 'down',
+           'direction': 'up' if break_point['direction'] == 0 else ('down' if break_point['direction'] == 1 else ''),
            'break_time': break_point['time'],
            'key_point': key_point,
            'enter_time': enter_point['time'],
@@ -126,11 +126,11 @@ def get_break_point(data, pre_break_index, base_point):
             direction = 1
             break
     # break_index = get_break_index(data, pre_break_index, base_point)
-    max_value = -1 if break_index == -1 else int(data[break_index][raw_data_helper.DATA_MAX_VALUE])
-    min_value = -1 if break_index == -1 else int(data[break_index][raw_data_helper.DATA_MIN_VALUE])
+    max_value = '' if break_index == -1 else int(data[break_index][raw_data_helper.DATA_MAX_VALUE])
+    min_value = '' if break_index == -1 else int(data[break_index][raw_data_helper.DATA_MIN_VALUE])
     time = '' if break_index == -1 else data[break_index][raw_data_helper.DATA_TIME]
     index = -1 if break_index == -1 else (break_index + 1) * 5
-    diff = -1 if break_index == -1 else max_value - min_value
+    diff = '' if break_index == -1 else max_value - min_value
 
     # print(break_index)
     return {'max': max_value, 'min': min_value, 'time': time, 'diff': diff, 'index': index,
@@ -143,12 +143,13 @@ def get_key_point(break_point, return_scale):
         return_value = break_point['diff'] // return_scale
         key_point = (break_point['max'] - return_value) if break_point['direction'] == 0 else break_point[
                                                                                                   'min'] + return_value
-    return key_point
+    return '' if key_point == -1 else key_point
 
 
-def get_enter_point(data, break_point, key_point):
+def get_enter_point(data, break_point, key_point, break_range):
     index = -1
-    if break_point['index'] != -1:
+    print(break_point['index'])
+    if (break_point['index'] != -1) & (break_point['index'] < break_range):
         for i in range(break_point['index'], len(data)):
             if break_point['direction'] == 0:
                 min_v = int(data[i][raw_data_helper.DATA_MIN_VALUE])
@@ -161,9 +162,12 @@ def get_enter_point(data, break_point, key_point):
                     index = i
                     break
 
-    max_value = -1 if break_point['index'] == -1 else int(data[index][raw_data_helper.DATA_MAX_VALUE])
-    min_value = -1 if break_point['index'] == -1 else int(data[index][raw_data_helper.DATA_MIN_VALUE])
-    time = '' if break_point['index'] == -1 else data[index][raw_data_helper.DATA_TIME]
+    max_value = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
+        data[index][raw_data_helper.DATA_MAX_VALUE])
+    min_value = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
+        data[index][raw_data_helper.DATA_MIN_VALUE])
+    time = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else data[index][
+        raw_data_helper.DATA_TIME]
     index = -1 if index == -1 else index + 1
     return {'max': max_value, 'min': min_value, 'time': time, 'index': index, 'direction': break_point['direction']}
 
@@ -203,7 +207,7 @@ def get_bonus_point(data, enter_point, key_point, terminal_time, pre_bonus_ampli
                 max_lose_time = time
 
             if (lose > 0) & (max_bonus >= pre_bonus_amplitude):
-                bonus = -1 * lose
+                bonus = 1
                 bonus_time = time
                 break
 
