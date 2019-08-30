@@ -14,10 +14,6 @@ output.remove()
 
 
 happy.go()
-# tx1_dir = tx1_helper.list_tx1_dir('tx1_data')
-# for key in tx1_dir:
-#     print (tx1_dir[key])
-    # print (tx1_helper.get_tx1_data(tx1_dir[key][0]))
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
 
