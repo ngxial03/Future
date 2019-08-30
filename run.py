@@ -1,5 +1,5 @@
 from common import output
-from policy import happy
+from policy import happy, greedy
 
 output.remove()
 
@@ -14,6 +14,7 @@ output.remove()
 
 
 happy.go()
+greedy.go()
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
 
