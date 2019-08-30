@@ -11,7 +11,7 @@ TERMINAL_TIME = 165  # 11:30:00
 # points
 PRE_BREAK_AMPLITUDE = 0
 PRE_ENTER_AMPLITUDE = 100
-PRE_BONUS_AMPLITUDE = 23
+PRE_BONUS_AMPLITUDE = 18
 WIN_AMPLITUDE = 26
 LOSE_AMPLITUDE = 26
 
@@ -70,6 +70,7 @@ def trace(month, tx1_file, tx5_file):
     if bonus_point['bonus'] != '':
         total_bonus = total_bonus + int(bonus_point['bonus'])
 
+    print(tx1_data[0])
     out = {'date': tx1_data[0][data_handler.DATA_DATE],
            'base_max': base_point['max'],
            'base_min': base_point['min'],
@@ -99,7 +100,6 @@ def get_base_point(data, base_range, pre_break_index, per_break_amplitude):
     pre_break = False
 
     for i in range(base_range):
-        # print(data[i])
         min_v = int(data[i][raw_data_helper.DATA_MIN_VALUE])
         max_v = int(data[i][raw_data_helper.DATA_MAX_VALUE])
         last_v = int(data[i][raw_data_helper.DATA_LAST_VALUE])
@@ -188,11 +188,12 @@ def get_enter_point(data, break_point, key_point, break_range):
                     index = i
                     break
 
-    max_value = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
+    print(index)
+    max_value = '' if (index == -1) | (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
         data[index][raw_data_helper.DATA_MAX_VALUE])
-    min_value = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
+    min_value = '' if (index == -1) | (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
         data[index][raw_data_helper.DATA_MIN_VALUE])
-    time = '' if (break_point['index'] == -1) | (break_point['index'] >= break_range) else data[index][
+    time = '' if (index == -1) | (break_point['index'] == -1) | (break_point['index'] >= break_range) else data[index][
         raw_data_helper.DATA_TIME]
     index = -1 if index == -1 else index + 1
     return {'max': max_value, 'min': min_value, 'time': time, 'index': index, 'direction': break_point['direction']}
