@@ -9,11 +9,11 @@ BREAK_RANGE = 75  # 10:00:00
 TERMINAL_TIME = 165  # 11:30:00
 
 # points
-PRE_BREAK_AMPLITUDE = 0
-PRE_ENTER_AMPLITUDE = 100
-PRE_BONUS_AMPLITUDE = 18
-WIN_AMPLITUDE = 26
-LOSE_AMPLITUDE = 26
+PRE_BREAK_AMPLITUDE = 1
+PRE_ENTER_AMPLITUDE = 1
+PRE_BONUS_AMPLITUDE = 27
+WIN_AMPLITUDE = 50
+LOSE_AMPLITUDE = 27
 
 # const
 RETURN_SCALE = 3
@@ -35,7 +35,10 @@ def go():
         # print (key)
         # print (tx1_helper.get_tx1_data(tx1_dir[key][0]))
         raw_data_helper.csv_write_header('happy_' + key, get_out_key())
+
         for p in range(len(tx1_dir[key])):
+            # if '201908' not in key:
+            #     break
             trace(key, tx1_dir[key][p], tx5_dir[key][p])
             # break
         # break
@@ -45,7 +48,7 @@ def go():
 
 def trace(month, tx1_file, tx5_file):
     # print(tx1_file)
-    print(tx5_file)
+    # print(tx5_file)
 
     # dailyData = function2.getDailyData(config.TX_DAILY_DIR)
     tx1_data = raw_data_helper.get_data(tx1_file)
@@ -70,7 +73,7 @@ def trace(month, tx1_file, tx5_file):
     if bonus_point['bonus'] != '':
         total_bonus = total_bonus + int(bonus_point['bonus'])
 
-    print(tx1_data[0])
+    # print(tx1_data[0])
     out = {'date': tx1_data[0][data_handler.DATA_DATE],
            'base_max': base_point['max'],
            'base_min': base_point['min'],
@@ -188,7 +191,7 @@ def get_enter_point(data, break_point, key_point, break_range):
                     index = i
                     break
 
-    print(index)
+    # print(index)
     max_value = '' if (index == -1) | (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(
         data[index][raw_data_helper.DATA_MAX_VALUE])
     min_value = '' if (index == -1) | (break_point['index'] == -1) | (break_point['index'] >= break_range) else int(

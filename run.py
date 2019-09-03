@@ -14,7 +14,7 @@ output.remove()
 
 
 happy.go()
-# greedy.go()
+greedy.go()
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
 
