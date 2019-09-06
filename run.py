@@ -1,5 +1,5 @@
 from common import output
-from policy import happy, greedy
+from policy import happy, pre_enter_point
 
 output.remove()
 
@@ -14,7 +14,7 @@ output.remove()
 
 
 happy.go()
-greedy.go()
+pre_enter_point.go()
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
 
