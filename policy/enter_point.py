@@ -1,12 +1,12 @@
 from helper import raw_data_helper
 
 
-def get_enter_point(data, break_point, key_point, break_range):
+def get_enter_point(data,key_point, break_range):
     index = -1
     # print(break_point['index'])
-    if (break_point['index'] != -1) & (break_point['index'] < break_range):
-        r = break_point['index']
-        if break_point['pre_enter']:
+    if (key_point['index'] != -1) & (key_point['index'] < break_range):
+        r = key_point['index']
+        if key_point['pre_enter']:
             r = r - 5
 
         for i in range(r, len(data)):
