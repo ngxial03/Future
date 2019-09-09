@@ -10,10 +10,10 @@ BREAK_RANGE = 75  # 10:00:00
 TERMINAL_TIME = 165  # 11:30:00
 
 # points
-PRE_BREAK_AMPLITUDE = 1
-PRE_ENTER_AMPLITUDE = 1
-PRE_BONUS_AMPLITUDE = 27
-WIN_AMPLITUDE = 50
+PRE_BREAK_AMPLITUDE = 5
+PRE_ENTER_AMPLITUDE = 5
+PRE_BONUS_AMPLITUDE = 18
+WIN_AMPLITUDE = 31
 LOSE_AMPLITUDE = 27
 
 # const
@@ -58,7 +58,7 @@ def trace(month, tx1_file, tx5_file):
     b_point = base_point.get_base_point(tx5_data, BASE_RANGE // 5, PRE_BREAK_INDEX // 5, PRE_BREAK_AMPLITUDE)
     # print(b_point)
 
-    brk_point = break_point.get_break_point(tx5_data, PRE_BREAK_INDEX // 5, b_point, PRE_ENTER_AMPLITUDE)
+    brk_point = break_point.get_break_point(tx5_data, PRE_BREAK_INDEX // 5, b_point, RETURN_SCALE)
     # print(brk_point)
 
     pre_en_point = pre_enter_point.get_pre_enter_point(tx1_data, PRE_BREAK_INDEX, b_point, PRE_ENTER_AMPLITUDE)
@@ -66,10 +66,10 @@ def trace(month, tx1_file, tx5_file):
     k_point = key_point.get_key_point(brk_point, pre_en_point, RETURN_SCALE)
     # print(k_point)
 
-    en_point = enter_point.get_enter_point(tx1_data, brk_point, k_point, BREAK_RANGE)
+    en_point = enter_point.get_enter_point(tx1_data, k_point, BREAK_RANGE)
     # print(enter_point)
 
-    bon_point = bonus_point.get_bonus_point(tx1_data, k_point, en_point['direction'], en_point['index'],
+    bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'], en_point['index'],
                                             TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
                                             WIN_AMPLITUDE,
                                             LOSE_AMPLITUDE)
@@ -86,8 +86,9 @@ def trace(month, tx1_file, tx5_file):
            'break_min': brk_point['min'],
            'direction': 'up' if brk_point['direction'] == 0 else ('down' if brk_point['direction'] == 1 else ''),
            'break_time': brk_point['time'],
-           'pre_enter': '' if brk_point['index'] == -1 else brk_point['pre_enter'],
-           'key_point': k_point,
+           'break_key_point': brk_point['break_key_point'],
+           'pre_enter': '' if pre_en_point['index'] == -1 else pre_en_point['pre_enter_point'],
+           'enter_point': en_point['enter_point'],
            'enter_time': en_point['time'],
            'bonus': bon_point['bonus'],
            'bonus_time': bon_point['time'],
@@ -103,6 +104,6 @@ def trace(month, tx1_file, tx5_file):
 
 
 def get_out_key():
-    return ['date', 'base_max', 'base_min', 'break_max', 'break_min', 'direction', 'break_time', 'pre_enter',
-            'key_point', 'enter_time', 'bonus', 'bonus_time', 'max_bonus', 'max_bonus_time', 'max_lose',
+    return ['date', 'base_max', 'base_min', 'break_max', 'break_min', 'direction', 'break_time', 'break_key_point',
+            'pre_enter', 'enter_point', 'enter_time', 'bonus', 'bonus_time', 'max_bonus', 'max_bonus_time', 'max_lose',
             'max_lose_time']

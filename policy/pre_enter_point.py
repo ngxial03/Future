@@ -4,17 +4,17 @@ from policy import base_point, break_point, key_point, enter_point, bonus_point
 import csv
 
 # minutes
-BASE_RANGE = 15  # 09:00:00
-PRE_BREAK_INDEX = 10  # 08:55:00
-BREAK_RANGE = 75  # 10:00:00
-TERMINAL_TIME = 165  # 11:30:00
+# BASE_RANGE = 15  # 09:00:00
+# PRE_BREAK_INDEX = 10  # 08:55:00
+# BREAK_RANGE = 75  # 10:00:00
+# TERMINAL_TIME = 165  # 11:30:00
 
 # points
-PRE_BREAK_AMPLITUDE = 5
-PRE_ENTER_AMPLITUDE = 1
-PRE_BONUS_AMPLITUDE = 26
-WIN_AMPLITUDE = 26
-LOSE_AMPLITUDE = 26
+# PRE_BREAK_AMPLITUDE = 5
+# PRE_ENTER_AMPLITUDE = 1
+# PRE_BONUS_AMPLITUDE = 18
+# WIN_AMPLITUDE = 26
+# LOSE_AMPLITUDE = 26
 
 # const
 RETURN_SCALE = 3
@@ -60,12 +60,12 @@ def trace(month, tx1_file, tx5_file):
 
     pre_enter_point = get_pre_enter_point(tx1_data, PRE_BREAK_INDEX, b_point, PRE_ENTER_AMPLITUDE)
 
-    k_point = key_point.get_key_point(brk_point, RETURN_SCALE)
+    k_point = key_point.get_key_point(brk_point, pre_enter_point, RETURN_SCALE)
 
-    en_point = enter_point.get_enter_point(tx1_data, brk_point, k_point, BREAK_RANGE)
+    en_point = enter_point.get_enter_point(tx1_data, k_point, BREAK_RANGE)
     # print(enter_point)
 
-    bon_point = bonus_point.get_bonus_point(tx1_data, k_point, en_point['direction'], en_point['index'],
+    bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'], en_point['index'],
                                             TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
                                             WIN_AMPLITUDE,
                                             LOSE_AMPLITUDE)
@@ -83,7 +83,7 @@ def trace(month, tx1_file, tx5_file):
            'pre_enter_time': pre_enter_point['time'],
            'pre_enter_direction': 'up' if pre_enter_point['direction'] == 0 else (
                'down' if pre_enter_point['direction'] == 1 else ''),
-           'pre_enter_point': pre_enter_point['point'],
+           'pre_enter_point': pre_enter_point['pre_enter_point'],
            'bonus': bon_point['bonus'],
            'bonus_time': bon_point['time'],
            'max_bonus': bon_point['max_bonus'],
@@ -100,7 +100,7 @@ def trace(month, tx1_file, tx5_file):
 
 def get_pre_enter_point(data, pre_break_index, base, pre_enter_amplitude):
     pre_enter_index = -1
-    pre_enter_point = 0
+    pre_enter_point = -1
     direction = -1
     for i in range(pre_break_index, len(data)):
         max_value = int(data[i][raw_data_helper.DATA_MAX_VALUE])
@@ -119,9 +119,10 @@ def get_pre_enter_point(data, pre_break_index, base, pre_enter_amplitude):
                 direction = 1
                 break
 
-    time = '' if pre_enter_index == -1 else data[pre_enter_index][raw_data_helper.DATA_TIME]
-    pre_enter_index = pre_enter_index if pre_enter_point == -1 else pre_enter_index + 1
-    return {'time': time, 'index': pre_enter_index, 'direction': direction, 'point': pre_enter_point}
+    pre_enter_point = '' if (pre_enter_index == -1) else pre_enter_point
+    time = '' if (pre_enter_index == -1) else data[pre_enter_index][raw_data_helper.DATA_TIME]
+    pre_enter_index = pre_enter_index if (pre_enter_index == -1) else (pre_enter_index + 1)
+    return {'time': time, 'index': pre_enter_index, 'direction': direction, 'pre_enter_point': pre_enter_point}
 
 
 def get_out_key():

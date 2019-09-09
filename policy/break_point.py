@@ -1,7 +1,7 @@
 from helper import raw_data_helper
 
 
-def get_break_point(data, pre_break_index, base_point, pre_enter_amplitude):
+def get_break_point(data, pre_break_index, base_point, return_scale):
     break_index = -1
     direction = -1
     for i in range(pre_break_index, len(data)):
@@ -21,6 +21,12 @@ def get_break_point(data, pre_break_index, base_point, pre_enter_amplitude):
     time = '' if break_index == -1 else data[break_index][raw_data_helper.DATA_TIME]
     index = -1 if break_index == -1 else (break_index + 1) * 5
     diff = '' if break_index == -1 else max_value - min_value
+
+    break_key_point = ''
+    if break_index != -1:
+        return_value = diff // return_scale
+        break_key_point = (max_value - return_value) if (direction == 0) else min_value + return_value
+
     # pre_enter = False
     # pre_enter_point = 0
     # if break_index != -1:
@@ -37,4 +43,4 @@ def get_break_point(data, pre_break_index, base_point, pre_enter_amplitude):
     #         'direction': direction, 'pre_enter': pre_enter, 'pre_enter_point': pre_enter_point}
 
     return {'max': max_value, 'min': min_value, 'last': last_value, 'time': time, 'diff': diff, 'index': index,
-            'direction': direction}
+            'direction': direction, 'break_key_point': break_key_point}
