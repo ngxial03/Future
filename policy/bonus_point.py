@@ -5,9 +5,9 @@ def get_bonus_point(tx1_data, point, direction, start_diff_time, end_diff_time, 
                     lose_amplitude):
     bonus = -100000
     bonus_time = ''
-    max_bonus = -100000
+    max_bonus = 0
     max_bonus_time = ''
-    max_lose = -100000
+    max_lose = 0
     max_lose_time = ''
 
     if start_diff_time != -1:
@@ -60,5 +60,5 @@ def get_bonus_point(tx1_data, point, direction, start_diff_time, end_diff_time, 
                 break
 
     return {'bonus': '' if bonus == -100000 else bonus, 'time': bonus_time,
-            'max_bonus': '' if max_bonus == -100000 else max_bonus, 'max_bonus_time': max_bonus_time,
-            'max_lose': '' if max_lose == -100000 else max_lose, 'max_lose_time': max_lose_time}
+            'max_bonus': '' if bonus == -100000 else max_bonus, 'max_bonus_time': max_bonus_time,
+            'max_lose': '' if bonus == -100000 else max_lose, 'max_lose_time': max_lose_time}

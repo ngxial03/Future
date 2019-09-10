@@ -21,6 +21,7 @@ RETURN_SCALE = 3
 
 # global
 total_bonus = 0
+month_bonus = 0
 
 
 def go():
@@ -43,7 +44,12 @@ def go():
             trace(key, tx1_dir[key][p], tx5_dir[key][p])
             # break
         # break
+        global month_bonus
+        print(month_bonus)
+        month_bonus = 0
+
     global total_bonus
+    print('--------------')
     print(total_bonus)
 
 
@@ -74,8 +80,10 @@ def trace(month, tx1_file, tx5_file):
                                             WIN_AMPLITUDE,
                                             LOSE_AMPLITUDE)
     # print(bonus_point)
+    global month_bonus
     global total_bonus
     if bon_point['bonus'] != '':
+        month_bonus = month_bonus + int(bon_point['bonus'])
         total_bonus = total_bonus + int(bon_point['bonus'])
 
     # print(tx1_data[0])
