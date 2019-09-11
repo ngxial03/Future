@@ -92,12 +92,16 @@ def trace(month, tx1_file, tx5_file):
            'base_min': b_point['min'],
            'break_max': brk_point['max'],
            'break_min': brk_point['min'],
-           'direction': 'up' if brk_point['direction'] == 0 else ('down' if brk_point['direction'] == 1 else ''),
+           'break_direction': 'up' if brk_point['direction'] == 0 else ('down' if brk_point['direction'] == 1 else ''),
            'break_time': brk_point['time'],
            'break_key_point': brk_point['break_key_point'],
+           'pre_enter_direction': 'up' if pre_en_point['direction'] == 0 else (
+               'down' if pre_en_point['direction'] == 1 else ''),
+           'pre_enter_time': pre_en_point['time'],
            'pre_enter': '' if pre_en_point['index'] == -1 else pre_en_point['pre_enter_point'],
-           'enter_point': en_point['enter_point'],
+           'enter_direction': 'up' if en_point['direction'] == 0 else ('down' if en_point['direction'] == 1 else ''),
            'enter_time': en_point['time'],
+           'enter_point': en_point['enter_point'],
            'bonus': bon_point['bonus'],
            'bonus_time': bon_point['time'],
            'max_bonus': bon_point['max_bonus'],
@@ -112,6 +116,7 @@ def trace(month, tx1_file, tx5_file):
 
 
 def get_out_key():
-    return ['date', 'base_max', 'base_min', 'break_max', 'break_min', 'direction', 'break_time', 'break_key_point',
-            'pre_enter', 'enter_point', 'enter_time', 'bonus', 'bonus_time', 'max_bonus', 'max_bonus_time', 'max_lose',
+    return ['date', 'base_max', 'base_min', 'break_max', 'break_min', 'break_direction', 'break_time',
+            'break_key_point', 'pre_enter_direction', 'pre_enter_time', 'pre_enter', 'enter_direction',
+            'enter_time', 'enter_point', 'bonus', 'bonus_time', 'max_bonus', 'max_bonus_time', 'max_lose',
             'max_lose_time']

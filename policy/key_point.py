@@ -15,6 +15,13 @@ def get_key_point(break_point, pre_en_point, return_scale):
         direction = pre_en_point['direction']
         index = pre_en_point['index']
         is_pre_enter = True
+        # if break_point['index'] - pre_en_point['index'] <= 1:
+        #     return_value = 1
+        #     key_point = (break_point['max'] - return_value) if break_point['direction'] == 0
+        #     else break_point['min'] + return_value
+        #     direction = break_point['direction']
+        #     index = break_point['index']
+        #     is_pre_enter = False
 
     key_point = '' if index == -1 else key_point
     direction = '' if index == -1 else direction

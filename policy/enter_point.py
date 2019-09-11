@@ -31,5 +31,7 @@ def get_enter_point(data, key_point, break_range):
     index = -1 if (index == -1) | (key_point['index'] == -1) | (key_point['index'] >= break_range) else index + 1
     point = '' if (index == -1) | (key_point['index'] == -1) | (key_point['index'] >= break_range) else key_point[
         'key_point']
-    return {'max': max_value, 'min': min_value, 'time': time, 'index': index, 'direction': key_point['direction'],
+    direction = '' if (index == -1) | (key_point['index'] == -1) | (key_point['index'] >= break_range) else key_point[
+        'direction']
+    return {'max': max_value, 'min': min_value, 'time': time, 'index': index, 'direction': direction,
             'enter_point': point}
