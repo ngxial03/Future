@@ -36,7 +36,7 @@ def get_bonus_point(tx1_data, point, direction, start_diff_time, end_diff_time, 
                 max_lose_time = time
 
             if (lose > 0) & (max_bonus >= pre_bonus_amplitude) & (bonus == -100000):
-                bonus = 2
+                bonus = 0
                 bonus_time = time
                 break
 
