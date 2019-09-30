@@ -1,4 +1,4 @@
-from common import config, data_handler
+from common import config
 from helper import original_data_helper
 import os
 from os import listdir
@@ -77,14 +77,16 @@ def divide_by_time(data):
 
 
 def gen_tx1_data(divide_data):
+    # print(divide_data)
     date_key = get_date_key()
     date = date_key[0:4] + '/' + date_key[4:6] + '/' + date_key[6:8]
-    dir = date_key[0:6]
-    original_data_helper.csv_write_header(config.TX1_DIR + '/' + dir, date_key, get_out_key())
-    for time_key in divide_data:
+    month_dir = date_key[0:6]
+    original_data_helper.csv_write_header(config.TX1_DIR + '/' + month_dir, date_key, get_out_key())
+    for time_key in sorted(divide_data.keys()):
+        # print(time_key)
         # print(time_key)
         data = divide_data[time_key]
-        open = int(data[0][4])
+        open_v = int(data[0][4])
         close = int(data[len(data) - 1][4])
         high = 0
         low = 100000000
@@ -110,23 +112,23 @@ def gen_tx1_data(divide_data):
         # print(volume)
         out = {'Date': date,
                'Time': time,
-               'Open': open,
+               'Open': open_v,
                'High': high,
                'Low': low,
                'Close': close,
                'Volume': volume
                }
 
-        original_data_helper.csv_write_row(config.TX1_DIR + '/' + dir, date_key, get_out_key(), out)
+        original_data_helper.csv_write_row(config.TX1_DIR + '/' + month_dir, date_key, get_out_key(), out)
 
 
 def gen_tx5_data():
     date_key = get_date_key()
-    dir = date_key[0:6]
-    tx1_data = original_data_helper.get_data(config.TX1_DIR + '/' + dir + '/' + date_key + '.txt')
-    original_data_helper.csv_write_header(config.TX5_DIR + '/' + dir, date_key, get_out_key())
+    month_dir = date_key[0:6]
+    tx1_data = original_data_helper.get_data(config.TX1_DIR + '/' + month_dir + '/' + date_key + '.txt')
+    original_data_helper.csv_write_header(config.TX5_DIR + '/' + month_dir, date_key, get_out_key())
 
-    open = 0
+    open_v = 0
     high = 0
     low = 100000000
     volume = 0
@@ -135,7 +137,7 @@ def gen_tx5_data():
     # print(tx1_data)
     for i in range(len(tx1_data)):
         if i % 5 == 0:
-            open = tx1_data[i][2]
+            open_v = tx1_data[i][2]
             high = 0
             low = 100000000
             volume = 0
@@ -149,14 +151,14 @@ def gen_tx5_data():
         if i % 5 == 4:
             out = {'Date': tx1_data[i][0],
                    'Time': tx1_data[i][1],
-                   'Open': open,
+                   'Open': open_v,
                    'High': high,
                    'Low': low,
                    'Close': tx1_data[i][5],
                    'Volume': volume
                    }
 
-            original_data_helper.csv_write_row(config.TX5_DIR + '/' + dir, date_key, get_out_key(), out)
+            original_data_helper.csv_write_row(config.TX5_DIR + '/' + month_dir, date_key, get_out_key(), out)
 
     # print(tx1_data)
 
@@ -167,11 +169,11 @@ def get_out_key():
 
 def remove(date_key):
     # print(date_key)
-    dir = date_key[0:6]
+    month_dir = date_key[0:6]
     # print(dir)
-    tx1_out = config.TX1_DIR + '/' + dir + '/' + date_key + '.txt'
-    tx5_out = config.TX5_DIR + '/' + dir + '/' + date_key + '.txt'
-    print(tx5_out)
+    tx1_out = config.TX1_DIR + '/' + month_dir + '/' + date_key + '.txt'
+    tx5_out = config.TX5_DIR + '/' + month_dir + '/' + date_key + '.txt'
+    # print(tx5_out)
     if os.path.isfile(tx1_out):
         os.remove(tx1_out)
     if os.path.isfile(tx5_out):
@@ -181,6 +183,6 @@ def remove(date_key):
 def remove_original_data():
     # files = [config.ORIGINAL_DIR + '/' + i for i in listdir(config.ORIGINAL_DIR + '/') if 'Daily_' not in i]
     files = [config.ORIGINAL_DIR + '/' + i for i in listdir(config.ORIGINAL_DIR + '/')]
-    print(files)
+    # print(files)
     for f in range(len(files)):
         os.remove(files[f])

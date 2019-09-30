@@ -33,7 +33,7 @@ def go():
 
     raw_data_helper.csv_write_header('happy_total', get_out_key())
 
-    for key in tx1_dir:
+    for key in sorted(tx1_dir.keys()):
         # print (key)
         # print (tx1_helper.get_tx1_data(tx1_dir[key][0]))
         raw_data_helper.csv_write_header('happy_' + key, get_out_key())

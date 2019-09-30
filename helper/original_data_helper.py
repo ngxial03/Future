@@ -1,5 +1,5 @@
+import sys
 from os import listdir
-from common import config
 import csv
 import os
 
@@ -25,18 +25,23 @@ def get_data(f):
     return data1
 
 
-def csv_write_header(dir, f_name, header):
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
-    # print(config.OUT + '/' + f_name + '.csv')
-    with open(dir + '/' + f_name + '.txt', 'a', newline='') as f:
+def csv_write_header(month_dir, f_name, header):
+    if not os.path.isdir(month_dir):
+        os.mkdir(month_dir)
+    kwargs = {}
+    if sys.version_info[0] != 2:
+        kwargs = {'newline': ''}
+    with open(month_dir + '/' + f_name + '.txt', 'a', **kwargs) as f:
         w = csv.DictWriter(f, header)
         w.writeheader()
 
 
-def csv_write_row(dir, f_name, header, out):
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
-    with open(dir + '/' + f_name + '.txt', 'a', newline='') as f:
+def csv_write_row(month_dir, f_name, header, out):
+    if not os.path.isdir(month_dir):
+        os.mkdir(month_dir)
+    kwargs = {}
+    if sys.version_info[0] != 2:
+        kwargs = {'newline': ''}
+    with open(month_dir + '/' + f_name + '.txt', 'a', **kwargs) as f:
         w = csv.DictWriter(f, header)
         w.writerow(out)

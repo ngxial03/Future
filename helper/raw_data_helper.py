@@ -1,3 +1,4 @@
+import sys
 from os import listdir
 from common import config
 import csv
@@ -37,12 +38,18 @@ def get_data(f):
 
 def csv_write_header(f_name, header):
     # print(config.OUT + '/' + f_name + '.csv')
-    with open(config.OUT + '/' + f_name + '.csv', 'a', newline='') as f:
+    kwargs = {}
+    if sys.version_info[0] != 2:
+        kwargs = {'newline': ''}
+    with open(config.OUT + '/' + f_name + '.csv', 'a', **kwargs) as f:
         w = csv.DictWriter(f, header)
         w.writeheader()
 
 
 def csv_write_row(f_name, header, out):
-    with open(config.OUT + '/' + f_name + '.csv', 'a', newline='') as f:
+    kwargs = {}
+    if sys.version_info[0] != 2:
+        kwargs = {'newline': ''}
+    with open(config.OUT + '/' + f_name + '.csv', 'a', **kwargs) as f:
         w = csv.DictWriter(f, header)
         w.writerow(out)
