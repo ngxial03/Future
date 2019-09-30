@@ -2,7 +2,6 @@ from common import config
 from helper import original_data_helper
 import os
 from os import listdir
-import csv
 import datetime
 
 
