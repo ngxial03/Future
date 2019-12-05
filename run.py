@@ -1,4 +1,4 @@
-from common import output, raw_data_gen
+from common import output, raw_data_gen, raw_data_download
 from policy import happy, pre_enter_point
 
 output.remove()
@@ -12,8 +12,10 @@ output.remove()
 #     dirList = [tx5Dir + "/" + i for i in listdir(tx5Dir)]
 #     return dirList
 
+raw_data_download.download()
 raw_data_gen.go()
 happy.go()
+
 # pre_enter_point.go()
 
 # print(function.getTx5Data('tx5_data/201908/20190816.txt'))
