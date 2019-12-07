@@ -9,6 +9,14 @@ def download():
     file_name = 'Daily_'+today+'.zip'
     tx_dir_name = datetime.date.today().strftime("%Y%m")
     tx_file_name = datetime.date.today().strftime("%Y%m%d") + '.txt'
+    week_day = datetime.date.today().weekday()
+    hour = datetime.datetime.now().hour
+
+    if week_day == 5 or week_day == 6:
+        return
+
+    if hour < 15:
+        return
 
     if os.path.isfile(config.TX1_DIR + '/'+tx_dir_name+'/' + tx_file_name) \
             and os.path.isfile(config.TX5_DIR + '/'+tx_dir_name+'/' + tx_file_name):
