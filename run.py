@@ -1,5 +1,5 @@
 from common import output, raw_data_gen, raw_data_download
-from policy import happy, pre_enter_point
+from policy import happy, pre_enter_point, max_min
 
 output.remove()
 
@@ -14,6 +14,7 @@ output.remove()
 
 raw_data_download.download()
 raw_data_gen.go()
+max_min.go()
 happy.go()
 
 # pre_enter_point.go()
