@@ -106,16 +106,35 @@ def get_pre_enter_point(data, pre_break_index, base, pre_enter_amplitude):
         max_value = int(data[i][raw_data_helper.DATA_MAX_VALUE])
         min_value = int(data[i][raw_data_helper.DATA_MIN_VALUE])
         last_value = int(data[i][raw_data_helper.DATA_LAST_VALUE])
+        open_value = int(data[i][raw_data_helper.DATA_OPEN_VALUE])
+        if open_value >= int(base['max']) + pre_enter_amplitude:
+            if (i % 5) >= 3:
+                pre_enter_index = i
+                # pre_enter_point = int(base['max']) + pre_enter_amplitude
+                pre_enter_point = open_value;
+                direction = 0
+                break
+
+        if open_value <= int(base['min']) - pre_enter_amplitude:
+            if (i % 5) >= 3:
+                pre_enter_index = i
+                # pre_enter_point = int(base['min']) - pre_enter_amplitude
+                pre_enter_point = open_value;
+                direction = 1
+                break
+
         if max_value >= int(base['max']) + pre_enter_amplitude:
             if (i % 5) >= 3:
                 pre_enter_index = i
                 pre_enter_point = int(base['max']) + pre_enter_amplitude
+                # pre_enter_point = open_value;
                 direction = 0
                 break
         if min_value <= int(base['min']) - pre_enter_amplitude:
             if (i % 5) >= 3:
                 pre_enter_index = i
                 pre_enter_point = int(base['min']) - pre_enter_amplitude
+                # pre_enter_point = open_value;
                 direction = 1
                 break
 
