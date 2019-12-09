@@ -3,6 +3,7 @@ from helper import raw_data_helper
 from policy import base_point, break_point, pre_enter_point, key_point, enter_point, bonus_point
 import csv
 
+
 def go():
     tx5_dir = raw_data_helper.list_raw_dir(config.TX5_DIR)
     raw_data_helper.csv_write_header('max_min_total', get_out_key())

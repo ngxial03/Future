@@ -1,11 +1,13 @@
 from common import config
-from urllib.request import urlopen
+# from urllib.request import urlopen
+from urllib2 import urlopen
 import zipfile
 import os
 import datetime
 
+
 def download():
-    today =  datetime.date.today().strftime("%Y_%m_%d")
+    today = datetime.date.today().strftime("%Y_%m_%d")
     file_name = 'Daily_'+today+'.zip'
     tx_dir_name = datetime.date.today().strftime("%Y%m")
     tx_file_name = datetime.date.today().strftime("%Y%m%d") + '.txt'
