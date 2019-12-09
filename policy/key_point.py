@@ -4,7 +4,7 @@ def get_key_point(break_point, pre_en_point, return_scale):
     index = -1
     is_pre_enter = False
     if break_point['index'] != -1:
-        if break_point['max'] - break_point['min'] > 25:
+        if break_point['max'] - break_point['min'] >= 25:
             key_point = (break_point['max']) if break_point['direction'] == 0 else break_point['min']
             direction = break_point['direction']
             index = break_point['index']
