@@ -15,6 +15,8 @@ PRE_ENTER_AMPLITUDE = 13
 PRE_BONUS_AMPLITUDE = 17
 WIN_AMPLITUDE = 32
 LOSE_AMPLITUDE = 28
+PRE_ENTER_WIN_AMPLITUDE = 55
+PRE_ENTER_LOSE_AMPLITUDE = 15
 
 # const
 RETURN_SCALE = 1.5
@@ -79,22 +81,24 @@ def trace(month, tx1_file, tx5_file):
         if k_point['direction'] == 0:
             dynamic_lose_amplitude = int(k_point['key_point']) - int(b_point['max'])
             bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
-                                                en_point['index'],
-                                                TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
-                                                55,
-                                                15)
-        else :
-            dynamic_lose_amplitude =  int(b_point['min']) - int(k_point['key_point'])
+                                                    en_point['index'],
+                                                    TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                    PRE_ENTER_WIN_AMPLITUDE,
+                                                    PRE_ENTER_LOSE_AMPLITUDE)
+
+        else:
+            dynamic_lose_amplitude = int(b_point['min']) - int(k_point['key_point'])
             bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
+                                                    en_point['index'],
+                                                    TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                    PRE_ENTER_WIN_AMPLITUDE,
+                                                    PRE_ENTER_LOSE_AMPLITUDE)
+    else:
+        bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
                                                 en_point['index'],
                                                 TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
-                                                55,
-                                                15)
-    else:
-        bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'], en_point['index'],
-                                            TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
-                                            WIN_AMPLITUDE,
-                                            LOSE_AMPLITUDE)
+                                                WIN_AMPLITUDE,
+                                                LOSE_AMPLITUDE)
     # print(bonus_point)
     global month_bonus
     global total_bonus
