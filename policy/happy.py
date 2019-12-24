@@ -85,6 +85,12 @@ def trace(month, tx1_file, tx5_file):
                                                     TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
                                                     PRE_ENTER_WIN_AMPLITUDE,
                                                     PRE_ENTER_LOSE_AMPLITUDE)
+            if b_point['pre_break']:
+                bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
+                                                        en_point['index'],
+                                                        TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                        60,
+                                                        20)
 
         else:
             dynamic_lose_amplitude = int(b_point['min']) - int(k_point['key_point'])
@@ -93,6 +99,13 @@ def trace(month, tx1_file, tx5_file):
                                                     TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
                                                     PRE_ENTER_WIN_AMPLITUDE,
                                                     PRE_ENTER_LOSE_AMPLITUDE)
+
+            if b_point['pre_break']:
+                bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
+                                                        en_point['index'],
+                                                        TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                        60,
+                                                        20)
     else:
         bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
                                                 en_point['index'],
