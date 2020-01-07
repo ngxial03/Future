@@ -14,10 +14,10 @@ def go():
 
 
 def trace(tx5_file):
-    print(tx5_file)
+    # print(tx5_file)
     tx5_data = raw_data_helper.get_data(tx5_file)
 
-    print (tx5_data)
+    # print (tx5_data)
     max_min_point = get_max_min_point(tx5_data)
 
     # print(tx1_data[0])
@@ -49,7 +49,8 @@ def get_max_min_point(data):
             min_value = min_v
             min_time = time
 
-    return {'max': max_value, 'max_time': max_time, 'min': min_value, 'min_time':min_time}
+    return {'max': max_value, 'max_time': max_time, 'min': min_value, 'min_time': min_time}
+
 
 def get_out_key():
     return ['date', 'max', 'max_time', 'min', 'min_time']
