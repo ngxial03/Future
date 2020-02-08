@@ -38,6 +38,7 @@ def go():
     tx5_dir = raw_data_helper.list_raw_dir(config.TX5_DIR)
     # print(tx5_dir)
 
+    total_bonus = 0
     raw_data_helper.csv_write_header('happy_total', get_out_key())
 
     for key in sorted(tx1_dir.keys()):
