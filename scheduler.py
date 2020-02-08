@@ -14,12 +14,6 @@ print (datetime.datetime.now())
 tz = get_localzone()
 print(tz)
 
-log = "update " + datetime.datetime.now().strftime("%Y%m%d")
-os.system('git status')
-os.system('git add .')
-os.system('git commit -m "' + log + '"')
-os.system('git push')
-
 
 def job():
     print(datetime.datetime.now())
@@ -30,7 +24,6 @@ def job():
     happy.go()
     # update to git
     log = "update " + datetime.datetime.now().strftime("%Y%m%d")
-    print(log)
     os.system('git status')
     os.system('git add .')
     os.system('git commit -m "' + log + '"')
