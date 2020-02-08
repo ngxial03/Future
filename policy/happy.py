@@ -1,7 +1,6 @@
 from common import config, data_handler
 from helper import raw_data_helper
 from policy import base_point, break_point, pre_enter_point, key_point, enter_point, bonus_point
-import csv
 
 # minutes
 BASE_RANGE = 15  # 09:00:00
