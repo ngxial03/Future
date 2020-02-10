@@ -24,6 +24,7 @@ def job():
     happy.go()
     # update to git
     log = "update " + datetime.datetime.now().strftime("%Y%m%d")
+    os.system('git pull')
     os.system('git status')
     os.system('git add .')
     os.system('git commit -m "' + log + '"')
