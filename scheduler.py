@@ -33,8 +33,8 @@ def job():
 
 # scheduler.add_job(job, 'interval', seconds=10)
 
-# scheduler.add_job(job, 'cron', day_of_week='mon-fri', hour=17, minute=30)
-scheduler.add_job(job, 'cron', hour=11, minute=02)
+scheduler.add_job(job, 'cron', day_of_week='mon-fri', hour=17, minute=30)
+# scheduler.add_job(job, 'cron', hour=11, minute=02)
 
 print('****** start scheduler ******')
 
