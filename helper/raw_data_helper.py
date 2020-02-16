@@ -1,5 +1,9 @@
 import sys
+from datetime import datetime
 from os import listdir
+
+from matplotlib.dates import date2num
+
 from common import config
 import csv
 
@@ -34,6 +38,23 @@ def get_data(f):
     data[0:1] = ()
     data1 = [i.strip('\n').strip('\r').split(',') for i in data]
     return data1
+
+
+def transfer(d):
+    dic = {"time": [], "High": [], "Low": [], "Open": [], "Close": []}
+    for i in range(0, len(d)):
+        t_value = d[i][DATA_TIME]
+        # float_t = float(t_value.replace(":", ""))
+        open_value = int(d[i][DATA_OPEN_VALUE])
+        last_value = int(d[i][DATA_LAST_VALUE])
+        max_value = int(d[i][DATA_MAX_VALUE])
+        min_value = int(d[i][DATA_MIN_VALUE])
+        dic["time"].append(t_value)
+        dic["High"].append(max_value)
+        dic["Low"].append(min_value)
+        dic["Open"].append(open_value)
+        dic["Close"].append(last_value)
+    return dic
 
 
 def csv_write_header(f_name, header):
