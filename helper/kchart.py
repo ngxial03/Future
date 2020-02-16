@@ -1,13 +1,19 @@
 import datetime
 
+from matplotlib.widgets import Cursor
+
 import raw_data_helper
 import matplotlib.pyplot as plt
 import mpl_finance as mpf
+import numpy as np
+
 import pandas_datareader as pdr
+
+K_BAR_WIDTH = 0.6
+quotes = raw_data_helper.transfer(raw_data_helper.get_data("tx5_data/202002/20200214.txt"))
 
 
 def draw():
-    quotes = raw_data_helper.transfer(raw_data_helper.get_data("tx5_data/202002/20200212.txt"))
     # quotes = raw_data_helper.get_data("tx5_data/202002/20200212.txt")
     print(quotes)
 
@@ -22,13 +28,20 @@ def draw():
     ax = fig.add_subplot(1, 1, 1)
     # ax.set_xticks(range(0, len(df_2330.index), 10))
     # ax.set_xticklabels(df_2330.index[::10])
-    ax.set_xticks(range(0, len(quotes["time"]), 1))
-    ax.set_xticklabels(quotes["time"][::1])
+    ax.set_xticks(range(0, len(quotes["time"]), 10))
+    ax.set_xticklabels(quotes["time"][::10])
     # mpf.candlestick2_ochl(ax, df_2330['Open'], df_2330['Close'], df_2330['High'],
     #                       df_2330['Low'], width=0.6, colorup='r', colordown='g', alpha=0.75)
     mpf.candlestick2_ochl(ax, quotes['Open'], quotes['Close'], quotes['High'],
-                          quotes['Low'], width=0.6, colorup='r', colordown='g', alpha=0.75)
-    plt.xticks(rotation=90)
+                          quotes['Low'], width=K_BAR_WIDTH, colorup='r', colordown='g', alpha=0.75)
+
+    cursor = Cursor(ax, useblit=True, color='blue', linewidth=0.6)
+    # cursor = Cursor(ax)
+    # fig.canvas.mpl_connect('motion_notify_event', mouse_move)
+    fig.align_labels()
+    plt.xticks(rotation=0)
+
+    ax.format_coord = format_coord
     plt.show()
 
     # fig, ax = plt.subplots(facecolor=(0.5, 0.5, 0.5))
@@ -54,3 +67,32 @@ def draw():
     #                       df_2330['Low'], width=0.6, colorup='r', colordown='g', alpha=0.75)
     # plt.grid(True)
     # plt.show()
+
+
+def mouse_move(event):
+    print("my position:", event.button, event.xdata, event.ydata)
+
+
+def format_coord(x, y):
+    print(x)
+    col = -1
+    if x < 0:
+        if x > -0.3:
+            col = 0
+    else:
+        print(int(x))
+
+        tmp = x - int(x+0.5)
+        print(tmp)
+
+        print(tmp)
+
+        if tmp < 0.3:
+            if tmp > -0.3:
+                col = int(x+0.5)
+                print(col)
+
+    if col == -1:
+        return ''
+    else:
+        return 'x=%s, y=%d' % (quotes['time'][col], quotes['Close'][col])
