@@ -1,7 +1,7 @@
 from helper import raw_data_helper
 
 
-def get_enter_point(data, key_point, break_range):
+def get_enter_point(data, key_point, break_range, terminal_time):
     index = -1
     # print(key_point['index'])
     if key_point['is_pre_enter']:
@@ -20,6 +20,9 @@ def get_enter_point(data, key_point, break_range):
                     if max_v >= key_point['key_point']:
                         index = i
                         break
+
+    if index > terminal_time:
+        index = -1
 
     # print(index)
     max_value = '' if (index == -1) | (key_point['index'] == -1) | (key_point['index'] >= break_range) else int(

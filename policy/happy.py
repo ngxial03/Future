@@ -79,7 +79,7 @@ def trace(month, tx1_file, tx5_file):
     k_point = key_point.get_key_point(brk_point, pre_en_point, RETURN_SCALE, PRE_ENTER_BREAK_DIFF)
     # print(k_point)
 
-    en_point = enter_point.get_enter_point(tx1_data, k_point, BREAK_RANGE)
+    en_point = enter_point.get_enter_point(tx1_data, k_point, BREAK_RANGE, TERMINAL_TIME)
     # print(enter_point)
 
     if k_point['is_pre_enter']:
