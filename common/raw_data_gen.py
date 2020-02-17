@@ -4,6 +4,7 @@ import os
 from os import listdir
 import datetime
 
+
 def go():
     date_key = get_date_key()
     if date_key == '':

@@ -15,8 +15,6 @@ quotes = raw_data_helper.transfer(raw_data_helper.get_data("tx5_data/202002/2020
 
 def draw():
     # quotes = raw_data_helper.get_data("tx5_data/202002/20200212.txt")
-    print(quotes)
-
     start = datetime.datetime(2018, 4, 1)
     # df_2330 = pdr.DataReader('2330.TW', 'yahoo', start=start)
     # print(df_2330['Close'])
@@ -74,25 +72,18 @@ def mouse_move(event):
 
 
 def format_coord(x, y):
-    print(x)
     col = -1
     if x < 0:
         if x > -0.3:
             col = 0
     else:
-        print(int(x))
-
         tmp = x - int(x+0.5)
-        print(tmp)
-
-        print(tmp)
-
         if tmp < 0.3:
             if tmp > -0.3:
                 col = int(x+0.5)
-                print(col)
 
     if col == -1:
         return ''
     else:
-        return 'x=%s, y=%d' % (quotes['time'][col], quotes['Close'][col])
+        # return 'x=%s, y=%d' % (quotes['time'][col], quotes['Close'][col])
+        return 'T:%s O:%d H:%d L:%d C:%d' % (quotes['time'][col], quotes['Open'][col], quotes['High'][col], quotes['Low'][col], quotes['Close'][col])
