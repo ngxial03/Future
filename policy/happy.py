@@ -12,6 +12,9 @@ TERMINAL_TIME = 120  # 10:45:00
 PRE_BREAK_AMPLITUDE = 5
 PRE_ENTER_AMPLITUDE = 13
 PRE_BONUS_AMPLITUDE = 17
+PRE_ENTER_BONUS_AMPLITUDE = 27
+PRE_ENTER_BREAK_BONUS_AMPLITUDE = 27
+PRE_BREAK_BONUS_AMPLITUDE = 17
 WIN_AMPLITUDE = 32
 LOSE_AMPLITUDE = 28
 PRE_ENTER_WIN_AMPLITUDE = 55
@@ -86,13 +89,13 @@ def trace(month, tx1_file, tx5_file):
         if b_point['pre_break']:
             bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
                                                     en_point['index'],
-                                                    TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                    TERMINAL_TIME, PRE_ENTER_BREAK_BONUS_AMPLITUDE,
                                                     PRE_ENTER_BREAK_WIN_AMPLITUDE,
                                                     PRE_ENTER_BREAK_LOSE_AMPLITUDE)
         else:
             bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
                                                     en_point['index'],
-                                                    TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                    TERMINAL_TIME, PRE_ENTER_BONUS_AMPLITUDE,
                                                     PRE_ENTER_WIN_AMPLITUDE,
                                                     PRE_ENTER_LOSE_AMPLITUDE)
 
@@ -100,7 +103,7 @@ def trace(month, tx1_file, tx5_file):
         if b_point['pre_break']:
             bon_point = bonus_point.get_bonus_point(tx1_data, en_point['enter_point'], en_point['direction'],
                                                     en_point['index'],
-                                                    TERMINAL_TIME, PRE_BONUS_AMPLITUDE,
+                                                    TERMINAL_TIME, PRE_BREAK_BONUS_AMPLITUDE,
                                                     PRE_BREAK_WIN_AMPLITUDE,
                                                     PRE_BREAK_LOSE_AMPLITUDE)
         else:
