@@ -2,7 +2,7 @@ import sys
 from datetime import datetime
 from os import listdir
 
-from matplotlib.dates import date2num
+#from matplotlib.dates import date2num
 
 from common import config
 import csv
