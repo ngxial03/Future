@@ -1,0 +1,5 @@
+date,base_max,base_min,break_max,break_min,break_direction,break_time,break_key_point,pre_enter_direction,pre_enter_time,pre_enter,enter_direction,enter_time,enter_point,bonus,bonus_time,max_bonus,max_bonus_time,max_lose,max_lose_time
+2020/06/01,11008,10971,11016,10982,up,09:10:00,10994.0,up,09:14:00,11021,,,,,,,,,
+2020/06/02,11086,11074,11095,11076,up,09:00:00,11083.0,up,09:05:00,11099,up,09:04:00,11083.0,40,09:10:00,57.0,09:16:00,11.0,10:17:00
+2020/06/03,11255,11233,11252,11221,down,09:05:00,11241.0,up,09:10:00,11268,down,09:07:00,11241.0,32,09:35:00,35.0,09:36:00,58.0,13:13:00
+2020/06/04,11425,11393,11404,11382,down,09:05:00,11396.0,down,09:14:00,11380,down,09:07:00,11396.0,0,09:08:00,90.0,10:38:00,19.0,09:20:00
