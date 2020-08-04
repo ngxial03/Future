@@ -1,2 +1,3 @@
 date,base_max,base_min,break_max,break_min,break_direction,break_time,break_key_point,pre_enter_direction,pre_enter_time,pre_enter,enter_direction,enter_time,enter_point,bonus,bonus_time,max_bonus,max_bonus_time,max_lose,max_lose_time
 2020/08/03,12549,12512,12565,12522,up,09:10:00,12537.0,up,09:10:00,12562,up,09:10:00,12562,-14,09:11:00,5,09:31:00,157,12:17:00
+2020/08/04,12530,12498,12548,12505,up,09:05:00,12520.0,up,09:05:00,12543,up,09:05:00,12543,-14,09:16:00,89,13:45:00,54,09:27:00
