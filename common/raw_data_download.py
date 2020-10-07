@@ -14,6 +14,7 @@ def download():
     tx_file_name = datetime.date.today().strftime("%Y%m%d") + '.txt'
     week_day = datetime.date.today().weekday()
     hour = datetime.datetime.now().hour
+    file_name = 'Daily_'+'2020_10_06'+'.zip'
 
     if week_day == 5 or week_day == 6:
         return
@@ -30,8 +31,11 @@ def download():
     with open(config.ORIGINAL_DIR + '/' + file_name, 'wb') as f:
         f.write(zip_content)
 
-    with zipfile.ZipFile(open(config.ORIGINAL_DIR + '/' +file_name, 'rb')) as f:
-        f.extractall(config.ORIGINAL_DIR)
+    try:
+        with zipfile.ZipFile(open(config.ORIGINAL_DIR + '/' +file_name, 'rb')) as f:
+            f.extractall(config.ORIGINAL_DIR)
+    except:
+        print('sf')
 
     if os.path.isfile(config.ORIGINAL_DIR + '/' + file_name):
         os.remove(config.ORIGINAL_DIR + '/' + file_name)
