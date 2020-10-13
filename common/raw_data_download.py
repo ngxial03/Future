@@ -8,7 +8,8 @@ import datetime
 
 def download():
     print('download')
-    today = datetime.date.today().strftime("%Y_%m_%d")
+    # today = datetime.date.today().strftime("%Y_%m_%d")
+    today = '2020_10_12'
     file_name = 'Daily_'+today+'.zip'
     tx_dir_name = datetime.date.today().strftime("%Y%m")
     tx_file_name = datetime.date.today().strftime("%Y%m%d") + '.txt'
