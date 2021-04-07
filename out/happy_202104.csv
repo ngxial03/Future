@@ -1,3 +1,4 @@
 date,base_max,base_min,break_max,break_min,break_direction,break_time,break_key_point,pre_enter_direction,pre_enter_time,pre_enter,enter_direction,enter_time,enter_point,bonus,bonus_time,max_bonus,max_bonus_time,max_lose,max_lose_time
 2021/04/01,16560,16527,16553,16510,down,09:35:00,16538.0,down,09:34:00,16514,down,09:34:00,16514,0,09:56:00,62,10:58:00,73,10:04:00
 2021/04/06,16794,16728,16746,16717,down,09:35:00,16736.0,up,09:45:00,16807,down,09:37:00,16736.0,0,09:37:00,39.0,11:55:00,104.0,09:45:00
+2021/04/07,16785,16751,16762,16734,down,09:45:00,16752.0,down,09:44:00,16738,down,09:44:00,16738,0,10:38:00,65,11:07:00,50,13:03:00
