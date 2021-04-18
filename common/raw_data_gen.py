@@ -162,6 +162,50 @@ def gen_tx5_data():
     # print(tx1_data)
 
 
+def gen_history_tx5_data(date_key):
+    # date_key = get_date_key()
+    month_dir = date_key[0:6]
+    if os.path.isfile(config.HISTORY_TX5_DIR + '/' + month_dir + '/' + date_key + '.txt'):
+        return
+
+    tx1_data = original_data_helper.get_data(config.HISTORY_TX1_DIR + '/' + month_dir + '/' + date_key + '.txt')
+    original_data_helper.csv_write_header(config.HISTORY_TX5_DIR + '/' + month_dir, date_key, get_out_key())
+
+    open_v = 0
+    high = 0
+    low = 100000000
+    volume = 0
+
+    tx1_data[0:1] = ()
+    # print(tx1_data)
+    for i in range(len(tx1_data)):
+        if i % 5 == 0:
+            open_v = tx1_data[i][2]
+            high = 0
+            low = 100000000
+            volume = 0
+
+        if int(tx1_data[i][3]) > high:
+            high = int(tx1_data[i][3])
+        if int(tx1_data[i][4]) < low:
+            low = int(tx1_data[i][4])
+        volume = volume + int(tx1_data[i][6])
+
+        if i % 5 == 4:
+            out = {'Date': tx1_data[i][0],
+                   'Time': tx1_data[i][1],
+                   'Open': open_v,
+                   'High': high,
+                   'Low': low,
+                   'Close': tx1_data[i][5],
+                   'Volume': volume
+                   }
+
+            original_data_helper.csv_write_row(config.HISTORY_TX5_DIR + '/' + month_dir, date_key, get_out_key(), out)
+
+    # print(tx1_data)
+
+
 def get_out_key():
     return ['Date', 'Time', 'Open', 'High', 'Low', 'Close', 'Volume']
 
