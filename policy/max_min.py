@@ -19,13 +19,15 @@ def trace(tx5_file):
 
     # print (tx5_data)
     max_min_point = get_max_min_point(tx5_data)
+    diff = max_min_point['max'] - max_min_point['min']
 
     # print(tx1_data[0])
     out = {'date': tx5_data[0][data_handler.DATA_DATE],
            'max': max_min_point['max'],
            'max_time': max_min_point['max_time'],
            'min': max_min_point['min'],
-           'min_time': max_min_point['min_time']}
+           'min_time': max_min_point['min_time'],
+           'diff': diff}
 
     # raw_data_helper.csv_write_row('max_min_' + month, get_out_key(), out)
     raw_data_helper.csv_write_row('max_min_total', get_out_key(), out)
@@ -53,4 +55,4 @@ def get_max_min_point(data):
 
 
 def get_out_key():
-    return ['date', 'max', 'max_time', 'min', 'min_time']
+    return ['date', 'max', 'max_time', 'min', 'min_time', 'diff']
