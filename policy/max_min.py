@@ -65,6 +65,8 @@ def trace_max_min_times():
     max_min_total = raw_data_helper.get_data('out/max_min_total.csv')
     # print(max_min_total)
 
+    sss = 0
+
     for i in range(61):
         # init_t = datetime.time(8, 45, 0)
         init_t = datetime.datetime.strptime('08:45:00', '%H:%M:%S')
@@ -74,7 +76,10 @@ def trace_max_min_times():
         # print(t_str)
 
         max_min_times = get_max_min_times(max_min_total, t_str)
-        # print(max_min_times)
+        sss = sss + float(max_min_times['sum'])
+        print(sss)
+        max_min_times['probability'] = sss / (2 * len(max_min_total))
+        print(max_min_times)
         raw_data_helper.csv_write_row('max_min_times', get_times_out_key(), max_min_times)
 
 
@@ -144,4 +149,4 @@ def get_max_min_times(data, time):
 
 
 def get_times_out_key():
-    return ['time', 'max_times', 'min_times', 'sum']
+    return ['time', 'max_times', 'min_times', 'sum', 'probability']
