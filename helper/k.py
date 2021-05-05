@@ -9,7 +9,9 @@ def draw(date):
     d = date[:6]
     print(dir)
     df = pd.read_csv('tx5_data/' + d + '/' + date + '.txt')
-    df = df.iloc[::-1]
+    # print(df)
+    # df = df.iloc[::-1]
+    print(df)
     fig = go.Figure(data=[go.Candlestick(x=df.Time,
                                          open=df.Open,
                                          high=df.High,

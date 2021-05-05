@@ -1,5 +1,6 @@
 from common import output, raw_data_gen, raw_data_download
-from policy import happy, pre_enter_point, max_min
+from helper import k
+from policy import happy, pre_enter_point, max_min, mm
 
 output.remove()
 
@@ -14,8 +15,10 @@ output.remove()
 
 raw_data_download.download()
 raw_data_gen.go()
-max_min.go()
+mm.go()
 # happy.go()
+
+# k.draw('20210503')
 
 # pre_enter_point.go()
 
