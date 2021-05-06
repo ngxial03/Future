@@ -18,6 +18,10 @@ def draw(date):
                                          low=df.Low,
                                          close=df.Close,
                                          name=date,
-                                         increasing_line_color='red', decreasing_line_color='green')])
+                                         increasing_line_color='red', decreasing_line_color='green')],
+                    layout=go.Layout(
+                        title=go.layout.Title(text=date)
+                    )
+    )
     # fig.show()
     pyoff.plot(fig)
