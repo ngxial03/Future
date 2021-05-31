@@ -1,6 +1,7 @@
 from common import config
 # from urllib.request import urlopen
-from urllib2 import urlopen
+# from urllib2 import urlopen
+import urllib.request
 import zipfile
 import os
 import datetime
@@ -29,9 +30,12 @@ def download():
     if os.path.isfile(config.TX1_DIR + '/'+tx_dir_name+'/' + tx_file_name) \
             and os.path.isfile(config.TX5_DIR + '/'+tx_dir_name+'/' + tx_file_name):
         return
-    download_url = urlopen('https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/'+file_name)
-    print('https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/'+file_name)
-    zip_content = download_url.read()
+    # download_url = urlopen('https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/'+file_name)
+    # print('https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/'+file_name)
+    # zip_content = download_url.read()
+
+    zip_content = urllib.request.urlopen('https://www.taifex.com.tw/file/taifex/Dailydownload/DailydownloadCSV/'+file_name).read()
+
     with open(config.ORIGINAL_DIR + '/' + file_name, 'wb') as f:
         f.write(zip_content)
 

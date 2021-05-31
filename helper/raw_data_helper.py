@@ -35,8 +35,9 @@ def list_dir(d):
 
 def get_data(f):
     data = open(f).readlines()
+    print(data)
     data[0:1] = ()
-    data1 = [i.strip('\n').strip('\r').split(',') for i in data]
+    data1 = [i.strip('\n').strip('\r').split(',') for i in data if i != '\n']
     return data1
 
 

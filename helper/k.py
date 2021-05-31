@@ -1,5 +1,5 @@
 import pandas as pd
-import chart_studio.plotly as py
+# import chart_studio.plotly as py
 import plotly.offline as pyoff
 import plotly.graph_objs as go
 from plotly.figure_factory import np

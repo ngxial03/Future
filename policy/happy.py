@@ -40,8 +40,11 @@ def go():
     tx5_dir = raw_data_helper.list_raw_dir(config.TX5_DIR)
     # print(tx5_dir)
 
+    global total_bonus
+
     total_bonus = 0
     raw_data_helper.csv_write_header('happy_total', get_out_key())
+
 
     for key in sorted(tx1_dir.keys()):
         # print (key)
@@ -58,7 +61,7 @@ def go():
         print(month_bonus)
         month_bonus = 0
 
-    global total_bonus
+    # global total_bonus
     print('--------------')
     print(total_bonus)
 
