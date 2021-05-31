@@ -16,7 +16,7 @@ output.remove()
 raw_data_download.download()
 raw_data_gen.go()
 # max_min.go()
-# mm.go()
+mm.go()
 # happy.go()
 
 # k.draw('20210412')
@@ -40,23 +40,23 @@ raw_data_gen.go()
 #
 
 
-k.draw('20210510')
-k.draw('20210511')
-k.draw('20210512')
-k.draw('20210513')
-k.draw('20210514')
-
-k.draw('20210517')
-k.draw('20210518')
-k.draw('20210519')
-k.draw('20210520')
-k.draw('20210521')
-
-k.draw('20210524')
-k.draw('20210525')
-k.draw('20210526')
-k.draw('20210527')
-k.draw('20210528')
+# k.draw('20210510')
+# k.draw('20210511')
+# k.draw('20210512')
+# k.draw('20210513')
+# k.draw('20210514')
+#
+# k.draw('20210517')
+# k.draw('20210518')
+# k.draw('20210519')
+# k.draw('20210520')
+# k.draw('20210521')
+#
+# k.draw('20210524')
+# k.draw('20210525')
+# k.draw('20210526')
+# k.draw('20210527')
+# k.draw('20210528')
 
 # pre_enter_point.go()
 

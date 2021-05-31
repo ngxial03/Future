@@ -1,2 +1,2 @@
 ps -ef | grep scheduler.py
-python scheduler.py &
+python333 scheduler.py &
