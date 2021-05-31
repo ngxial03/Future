@@ -20,9 +20,13 @@ def list_original_dir(d):
 
 
 def get_data(f):
-    data = open(f).readlines()
+    data = open(f, encoding='utf-8', errors='ignore')
     data1 = [i.strip('\n').strip('\r').split(',') for i in data]
     return data1
+
+    # data = open(f).readlines()
+    # data1 = [i.strip('\n').strip('\r').split(',') for i in data]
+    # return data1
 
 
 def csv_write_header(month_dir, f_name, header):
