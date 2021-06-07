@@ -42,7 +42,8 @@ def draw(date):
     fig['layout']['title'] = date
 
     fig.add_trace(go.Candlestick(x=df["Time"], open=df["Open"], high=df["High"],
-                                 low=df["Low"], close=df["Close"], showlegend=False),
+                                 low=df["Low"], close=df["Close"], showlegend=False,
+                                 increasing_line_color='red', decreasing_line_color='green'),
                   row=1, col=1
                   )
 
