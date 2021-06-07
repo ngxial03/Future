@@ -14,7 +14,7 @@ def draw(date):
     d = date[:6]
     # print(dir)
     df = pd.read_csv('tx5_data/' + d + '/' + date + '.txt')
-    # print(df)
+    print(df)
     df.index = pd.DatetimeIndex(df['Time'])
 
     # df.rename(columns={'Time': 'dates'}, inplace=True)
