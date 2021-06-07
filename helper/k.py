@@ -22,6 +22,7 @@ def draw(date):
                     layout=go.Layout(
                         title=go.layout.Title(text=date)
                     )
-    )
-    # fig.show()
+                    )
+
+    # fig2.show()
     pyoff.plot(fig)

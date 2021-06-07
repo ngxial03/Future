@@ -1,5 +1,5 @@
 from common import output, raw_data_gen, raw_data_download
-from helper import k
+from helper import k, k2
 from policy import happy, pre_enter_point, max_min, mm
 
 output.remove()
@@ -56,6 +56,12 @@ mm.go()
 # k.draw('20210531')
 #
 # k.draw('20210601')
+# # k.draw('20210602')
+# # k.draw('20210603')
+# k.draw('20210604')
+
+# k2.draw('20210604')
+# k2.draw('20210607')
 
 # pre_enter_point.go()
 
