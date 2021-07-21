@@ -10,13 +10,13 @@ import datetime
 def download():
     print('download')
     today = datetime.date.today().strftime("%Y_%m_%d")
-    # today = '2021_02_17'
+    # today = '2021_07_20'
     file_name = 'Daily_'+today+'.zip'
     tx_dir_name = datetime.date.today().strftime("%Y%m")
     tx_file_name = datetime.date.today().strftime("%Y%m%d") + '.txt'
     week_day = datetime.date.today().weekday()
     hour = datetime.datetime.now().hour
-    # file_name = 'Daily_'+'2021_03_19'+'.zip'
+    # file_name = 'Daily_'+'2021_07_20'+'.zip'
 
     if week_day == 5 or week_day == 6:
         return
